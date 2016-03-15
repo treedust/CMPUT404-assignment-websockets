@@ -269,14 +269,15 @@ function wsSetup() {
     };
     socket.onerror = function(msg) {
         //debug("WebSocket Error:" + msg.data);
+        socket.send("getIt");
     };
     socket.onmessage = function(msg) {  
         try {
             //debug("WebSocket Recv:" + msg.data);
             //XXX: TODO What are you going to do here?
-            var message = JSON.parse(msg.data);
-            for (entity in message) {
-            	world[entity] = message[entity];
+            var jsonarry = JSON.parse(msg.data);
+            for (entity in jsonarry) {
+            	world[entity] = jsonarry[entity];
             }
             drawNextFrame();
         } catch (e) {
@@ -291,7 +292,7 @@ wsSetup();
 
 
 // 30 frames per second
-setInterval( update, 1000/60.0);
+setInterval( update, 1000/30.0);
 
 
     </script>

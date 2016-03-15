@@ -102,8 +102,11 @@ def read_ws(ws,client):
             msg = ws.receive()
             print "WS RECV: %s" % msg
             if (msg is not None):
-                packet = json.loads(msg)
-                send_all_json( packet )
+                if (msg == "getIt"):
+                    client.put(json.dumps(myWorld()))
+                else:
+                    packet = json.loads(msg)
+                    send_all_json( packet )
             else:
                 break
     except:
